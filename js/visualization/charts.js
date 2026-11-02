@@ -76,9 +76,10 @@
     constructor(canvas) {
       this.canvas = canvas;
       this.ctx = canvas ? canvas.getContext('2d') : null;
+      this.animationFrame = null;
     }
 
-    render(ooaHist, choaHist, maxIter) {
+    render(ooaHist, choaHist, maxIter, progress = 1) {
       if (!this.canvas || !this.ctx) return;
       const ctx = this.ctx;
       const w = this.canvas.width;
@@ -114,10 +115,11 @@
 
       // 1. Kurva OOA (Terracotta / Orange-red)
       if (ooaHist.length > 0) {
+        const visibleOoa = ooaHist.slice(0, Math.ceil(ooaHist.length * progress));
         ctx.strokeStyle = '#ab2e16';
         ctx.lineWidth = 2.5;
         ctx.beginPath();
-        for (let i = 0; i < ooaHist.length; i++) {
+        for (let i = 0; i < visibleOoa.length; i++) {
           const lVal = Math.log10(Math.max(1e-16, ooaHist[i]));
           const x = padL + (i / (maxIter - 1 || 1)) * plotW;
           const y = padT + plotH - ((lVal - minLog) / span) * plotH;
@@ -129,10 +131,11 @@
 
       // 2. Kurva ChOA (Slate Navy)
       if (choaHist.length > 0) {
+        const visibleChoa = choaHist.slice(0, Math.ceil(choaHist.length * progress));
         ctx.strokeStyle = '#505f76';
         ctx.lineWidth = 2.5;
         ctx.beginPath();
-        for (let i = 0; i < choaHist.length; i++) {
+        for (let i = 0; i < visibleChoa.length; i++) {
           const lVal = Math.log10(Math.max(1e-16, choaHist[i]));
           const x = padL + (i / (maxIter - 1 || 1)) * plotW;
           const y = padT + plotH - ((lVal - minLog) / span) * plotH;
@@ -148,9 +151,26 @@
       ctx.fillText(maxLog.toFixed(1), 6, padT + 8);
       ctx.fillText(minLog.toFixed(1), 6, h - padB + 2);
     }
+
+    animate(ooaHist, choaHist, maxIter, duration = 1400) {
+      if (!this.canvas || !this.ctx) return;
+      if (this.animationFrame !== null) cancelAnimationFrame(this.animationFrame);
+
+      const startTime = performance.now();
+      const drawFrame = (now) => {
+        const progress = Math.min(1, (now - startTime) / duration);
+        this.render(ooaHist, choaHist, maxIter, progress);
+        if (progress < 1) {
+          this.animationFrame = requestAnimationFrame(drawFrame);
+        } else {
+          this.animationFrame = null;
+        }
+      };
+
+      this.animationFrame = requestAnimationFrame(drawFrame);
+    }
   }
 
   window.MetaOpt.ConvergenceChart = ConvergenceChart;
   window.MetaOpt.DualConvergenceChart = DualConvergenceChart;
 })();
-
