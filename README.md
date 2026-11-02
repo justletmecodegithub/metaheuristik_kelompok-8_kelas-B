@@ -21,6 +21,11 @@ Platform ini memadukan estetika presentasi akademik minimalis bergaya Canva mono
 
 ## 2. Fitur Utama
 
+- **Format Presentasi Interaktif 9 Slide**:
+  - Cover Kelompok 8 Kelas B, daftar isi yang langsung menuju topik, enam topik materi, dan slide penutup.
+  - Navigasi materi melalui daftar isi dan kontrol panah, tanpa navbar.
+  - Simulasi visual OOA dan ChOA ditampilkan lebih besar untuk mendukung penjelasan.
+  - Sorotan hover dan klik pada kartu penjelasan serta tautan langsung ke DOI artikel primer.
 - **Penjelasan Ilmiah Berbahasa Indonesia & LaTeX Formulasi Ketat**:
   - Formulasi persamaan matematis lengkap dirender menggunakan KaTeX.
   - Dokumentasi tiap tahapan algoritma: inisialisasi, evaluasi biaya, eksplorasi global, eksploitasi lokal, clamping batas, dan seleksi elitis.
@@ -36,16 +41,15 @@ Platform ini memadukan estetika presentasi akademik minimalis bergaya Canva mono
   - Kurva konvergensi logaritmik real-time ($\log_{10}(f(X^*))$ vs Iterasi).
 - **Protokol Komparasi Sinkron Berdampingan**:
   - Menjalankan OOA dan ChOA secara paralel di bawah kondisi acak (*seed*), batas pencarian, dan anggaran evaluasi yang sama persis.
-  - Grafik konvergensi ganda dan tabel perbandingan metrik statistika (*Best, Mean, Worst, Std Dev, Total NFE, Runtime ms*).
+  - Digabung dengan Interactive Lab; grafik konvergensi ganda dianimasikan dan dilengkapi tabel perbandingan metrik (*Best, Mean, Worst, Std Dev, Total NFE, Runtime ms*).
 - **Laboratorium Replikasi Monte Carlo & Ekspor CSV**:
   - Menjalankan multi-trial batch (5, 10, atau 30 replikasi independen).
   - Menghitung statistik selisih $(\Delta)$ dan penentuan pemenang uji secara objektif.
   - Ekspor hasil eksperimen ke format berkas CSV standar RFC 4180 untuk analisis lanjutan di Excel, SPSS, atau Python/R.
 - **Desain Responsif & Navigasi Mulus**:
-  - Scroll-spy dengan indikator bagian aktif di navigasi atas.
-  - Scroll progress bar di puncak halaman.
-  - Drawer navigasi mobile yang ramah sentuhan.
-  - Tombol melayang *Back to Top*.
+  - Mode presentasi layar penuh dengan satu slide aktif dan transisi *fade-in*.
+  - Navigasi lewat daftar isi, tombol panah layar, atau tombol panah kiri/kanan keyboard.
+  - Indikator progres dan nomor slide tanpa navbar tambahan.
   - Flowchart interaktif dengan inspeksi detail per langkah dan tombol salin pseudocode satu klik.
 
 ---
@@ -85,7 +89,7 @@ Platform ini memadukan estetika presentasi akademik minimalis bergaya Canva mono
     │   └── charts.js              # Plot kurva konvergensi logaritmik (tunggal & komparatif)
     ├── experiments/
     │   └── runner.js              # Runner batch Monte Carlo & generator ekspor CSV
-    ├── navigation.js              # Scroll-spy, mobile drawer, flowchart click, & copy code
+    ├── navigation.js              # Navigasi slide, flowchart click, & copy code
     └── app.js                     # Main application orchestrator & telemetry updates
 ```
 
@@ -163,4 +167,3 @@ Proyek ini telah dikonfigurasi secara statis dengan jalur relatif sehingga siap 
 
 ---
 *Dikembangkan untuk Symposium & Praktikum Mata Kuliah Optimasi / Algoritma Metaheuristik.*
-
