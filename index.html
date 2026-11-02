@@ -79,96 +79,58 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css"/>
 </head>
-<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed-variant">
+<body class="presentation-deck bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed-variant">
 
-  <!-- Scroll Progress Indicator Bar -->
-  <div class="fixed top-0 left-0 h-1 bg-primary z-[60] transition-all duration-75" id="scrollProgressBar" style="width: 0%;"></div>
-
-  <!-- Header & Navigasi Akademik -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur-md border-b border-outline-variant/40 shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
-    <div class="h-20 w-full max-w-7xl mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-space-md">
-      
-      <!-- Brand Logo -->
-      <div class="flex items-center gap-space-md shrink-0">
-        <a class="flex items-center gap-space-sm group" data-path="overview" href="#overview">
-          <span class="font-code-sm text-label-lg tracking-widest text-primary font-bold">META::OPT</span>
-          <span class="font-headline-sm text-lg text-on-surface border-l pl-space-sm ml-space-xs border-outline-variant hidden sm:inline-block">Symposium Lab</span>
-        </a>
-        <div class="hidden xl:flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant border border-outline-variant">
-          <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-          <span class="font-code-sm text-xs uppercase tracking-wider">Engine: Client-Side FP64</span>
-        </div>
-      </div>
-
-      <!-- Desktop Navigation Links -->
-      <nav class="hidden lg:flex items-center gap-1" id="desktopNav">
-        <a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant font-label-md text-sm hover:bg-surface-container-high hover:text-on-surface transition-all bg-primary text-on-primary font-semibold shadow-sm" data-path="overview" href="#overview">Overview</a>
-        <a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant font-label-md text-sm hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="ooa-osprey" href="#ooa-osprey">OOA (Osprey)</a>
-        <a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant font-label-md text-sm hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="choa-chimp" href="#choa-chimp">ChOA (Chimp)</a>
-        <a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant font-label-md text-sm hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="interactive-lab" href="#interactive-lab">Interactive Lab</a>
-        <a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant font-label-md text-sm hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="comparison" href="#comparison">Perbandingan</a>
-        <a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant font-label-md text-sm hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="experiment" href="#experiment">Eksperimen</a>
-        <a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant font-label-md text-sm hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="references" href="#references">Referensi</a>
-      </nav>
-
-      <!-- Action Buttons & Mobile Hamburger -->
-      <div class="flex items-center gap-space-sm shrink-0">
-        <a class="hidden sm:inline-flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-xs border border-outline-variant hover:bg-surface-container-high transition-colors" href="#references">
-          <span class="material-symbols-outlined text-[16px] text-on-surface-variant">menu_book</span>
-          <span>Monograf</span>
-        </a>
-        <button class="lg:hidden p-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors" id="mobileMenuBtn" aria-label="Buka Navigasi">
-          <span class="material-symbols-outlined text-[22px]">menu</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Mobile Drawer Backdrop & Menu -->
-  <div class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden lg:hidden transition-opacity" id="mobileBackdrop"></div>
-  <div class="fixed top-0 right-0 bottom-0 w-72 bg-surface z-50 translate-x-full shadow-2xl flex flex-col p-space-md lg:hidden" id="mobileDrawer">
-    <div class="flex items-center justify-between pb-space-sm border-b border-outline-variant">
-      <span class="font-code-sm font-bold text-primary">NAVIGASI MODUL</span>
-      <button class="p-1.5 rounded-lg hover:bg-surface-container text-on-surface-variant" id="mobileMenuCloseBtn">
-        <span class="material-symbols-outlined text-[20px]">close</span>
-      </button>
-    </div>
-    <div class="flex flex-col gap-1 py-space-md flex-1 overflow-y-auto font-label-md text-sm">
-      <a class="px-space-sm py-2 rounded-lg text-on-surface hover:bg-surface-container" data-path="overview" href="#overview">Overview &amp; Fondasi</a>
-      <a class="px-space-sm py-2 rounded-lg text-on-surface hover:bg-surface-container" data-path="ooa-osprey" href="#ooa-osprey">OOA (Osprey Optimization)</a>
-      <a class="px-space-sm py-2 rounded-lg text-on-surface hover:bg-surface-container" data-path="choa-chimp" href="#choa-chimp">ChOA (Chimp Optimization)</a>
-      <a class="px-space-sm py-2 rounded-lg text-on-surface hover:bg-surface-container" data-path="interactive-lab" href="#interactive-lab">Laboratorium Interaktif</a>
-      <a class="px-space-sm py-2 rounded-lg text-on-surface hover:bg-surface-container" data-path="comparison" href="#comparison">Perbandingan Algoritma</a>
-      <a class="px-space-sm py-2 rounded-lg text-on-surface hover:bg-surface-container" data-path="experiment" href="#experiment">Eksperimen Monte Carlo</a>
-      <a class="px-space-sm py-2 rounded-lg text-on-surface hover:bg-surface-container" data-path="references" href="#references">Daftar Pustaka &amp; Sitasi</a>
-    </div>
-    <div class="pt-space-sm border-t border-outline-variant text-xs font-code-sm text-tertiary">
-      <span>IEEE-754 FP64 WASM/JS Engine</span>
-    </div>
-  </div>
+  <div aria-hidden="true" class="deck-progress" id="deckProgress"></div>
 
   <!-- Konten Utama -->
-  <main class="w-full flex-1 pt-20 bg-surface">
+  <main class="presentation-main w-full flex-1 bg-surface" id="presentationDeck">
     <div class="flex flex-col w-full">
 
-      <!-- Context Header Strip -->
-      <section class="w-full bg-surface-container-low py-2 px-margin-mobile lg:px-margin border-b border-outline-variant/30">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-space-xs text-on-surface-variant font-code-sm text-xs">
-          <div class="flex items-center gap-space-sm flex-wrap">
-            <span class="px-1.5 py-0.5 rounded bg-primary text-on-primary font-label-md font-semibold text-[11px]">STUDI MONOGRAF</span>
-            <span>OPTIMASI KONTINU BIO-INSPIRATIF</span>
-            <span class="hidden sm:inline">•</span>
-            <span class="text-primary font-semibold">STUDI KOMPARATIF OOA vs ChOA</span>
+      <!-- SLIDE 01: TITLE -->
+      <section aria-labelledby="presentation-title" class="presentation-slide presentation-cover w-full px-margin-mobile lg:px-margin" id="title-slide">
+        <div class="presentation-window max-w-6xl mx-auto">
+          <div class="window-chrome" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="cover-content">
+            <p class="font-code-sm text-sm tracking-[0.2em] uppercase text-lime-300">Presentasi Metaheuristik · Kelas B</p>
+            <h1 class="font-headline-lg text-5xl md:text-7xl font-semibold tracking-tight text-white" id="presentation-title">
+              OOA <span class="text-lime-300">&amp;</span> ChOA
+            </h1>
+            <p class="font-code-sm text-lg md:text-2xl text-slate-300">Optimasi yang terinspirasi dari alam</p>
+            <div class="cover-group">
+              <span class="text-lime-300">Kelompok 8</span>
+              <span class="text-slate-500">/</span>
+              <span>Kelas B</span>
+            </div>
+            <a class="inline-flex items-center gap-2 rounded-lg bg-lime-300 px-5 py-3 font-label-md text-sm font-bold text-slate-950 transition hover:bg-lime-200" href="#table-of-contents">
+              Mulai presentasi <span aria-hidden="true">→</span>
+            </a>
           </div>
-          <div class="flex items-center gap-space-md text-[11px]">
-            <span>METODE: SIMULASI DETERMINISTIK</span>
-            <span>PREP: IEEE-754 FP64</span>
-          </div>
+          <div class="cover-index font-code-sm">BIO-INSPIRED OPTIMIZATION / 2025—2026</div>
         </div>
       </section>
 
-      <!-- SECTION 1: OVERVIEW & PENGENALAN -->
-      <section class="w-full py-space-xl px-margin-mobile lg:px-margin" id="overview">
+      <!-- SLIDE 02: TABLE OF CONTENTS -->
+      <section aria-labelledby="contents-title" class="presentation-slide presentation-toc w-full px-margin-mobile lg:px-margin" id="table-of-contents">
+        <div class="max-w-6xl mx-auto">
+          <div class="toc-heading">
+            <span class="font-code-sm text-lime-300">PETA PRESENTASI · 6 TOPIK</span>
+            <h2 class="font-headline-lg text-4xl md:text-6xl font-semibold text-white" id="contents-title">Daftar Isi</h2>
+            <p class="text-slate-300">Pilih topik untuk langsung menuju slide yang ingin dibahas.</p>
+          </div>
+          <nav aria-label="Daftar isi presentasi" class="toc-grid">
+            <a class="toc-card" data-path="overview" href="#overview"><span>03</span><strong>Overview</strong><small>Fondasi optimasi metaheuristik</small><b aria-hidden="true">↗</b></a>
+            <a class="toc-card" data-path="ooa-osprey" href="#ooa-osprey"><span>04</span><strong>OOA · Osprey</strong><small>Berburu ikan dan eksploitasi</small><b aria-hidden="true">↗</b></a>
+            <a class="toc-card" data-path="choa-chimp" href="#choa-chimp"><span>05</span><strong>ChOA · Chimp</strong><small>Strategi kelompok simpanse</small><b aria-hidden="true">↗</b></a>
+            <a class="toc-card" data-path="interactive-lab" href="#interactive-lab"><span>06</span><strong>Interactive Lab &amp; Komparasi</strong><small>Simulasi serta perbandingan OOA–ChOA</small><b aria-hidden="true">↗</b></a>
+            <a class="toc-card" data-path="experiment" href="#experiment"><span>07</span><strong>Eksperimen</strong><small>Replikasi dan hasil statistik</small><b aria-hidden="true">↗</b></a>
+            <a class="toc-card" data-path="references" href="#references"><span>08</span><strong>Referensi</strong><small>Sumber literatur primer</small><b aria-hidden="true">↗</b></a>
+          </nav>
+        </div>
+      </section>
+
+      <!-- SLIDE 03: OVERVIEW & PENGENALAN -->
+      <section class="presentation-slide w-full py-space-xl px-margin-mobile lg:px-margin" data-slide="03" id="overview">
         <div class="max-w-7xl mx-auto space-y-space-xl">
           
           <!-- Hero Title Block -->
@@ -177,17 +139,17 @@
               <span class="material-symbols-outlined text-[16px] text-primary">biotech</span>
               <span>COMPUTATIONAL INTELLIGENCE &amp; BIO-INSPIRED HEURISTICS</span>
             </div>
-            <h1 class="font-headline-lg text-4xl lg:text-5xl text-on-surface font-semibold tracking-tight leading-tight">
-              Optimasi Metaheuristik: <span class="italic text-primary font-serif">OOA &amp; ChOA</span>
-            </h1>
+            <h2 class="font-headline-lg text-4xl lg:text-5xl text-on-surface font-semibold tracking-tight leading-tight">
+            Overview: <span class="italic text-primary font-serif">optimasi berbasis populasi</span>
+            </h2>
             <p class="font-body-md text-lg text-on-surface-variant leading-relaxed">
-              Mempelajari <strong>Osprey Optimization Algorithm (OOA)</strong> dan <strong>Chimp Optimization Algorithm (ChOA)</strong> melalui formulasi matematis yang ketat, visualisasi topologi ruang pencarian, serta simulasi interaktif berbasis peramban web tanpa dependensi server.
+            OOA dan ChOA mencari solusi terbaik dengan menggerakkan banyak kandidat secara iteratif. Keduanya menyeimbangkan eksplorasi ruang pencarian dan eksploitasi kandidat unggul tanpa membutuhkan turunan fungsi.
             </p>
           </div>
 
           <!-- 5 Pilar Fondasi Optimasi Metaheuristik -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-md">
-            <div class="bg-surface-container-low p-space-md rounded-lg space-y-space-xs hover:bg-surface-container transition-colors border border-outline-variant/30 shadow-sm">
+            <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-md rounded-lg space-y-space-xs hover:bg-surface-container transition-colors border border-outline-variant/30 shadow-sm" role="button" tabindex="0">
               <div class="flex items-center justify-between">
                 <span class="font-code-sm text-xs text-primary font-semibold">01 / RUANG</span>
                 <span class="material-symbols-outlined text-primary text-[20px]">architecture</span>
@@ -196,7 +158,7 @@
               <p class="font-body-sm text-xs text-on-surface-variant">Domain kontinu $D$-dimensi yang dibatasi oleh vektor batas bawah $\mathbf{lb}$ dan batas atas $\mathbf{ub}$.</p>
             </div>
 
-            <div class="bg-surface-container-low p-space-md rounded-lg space-y-space-xs hover:bg-surface-container transition-colors border border-outline-variant/30 shadow-sm">
+            <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-md rounded-lg space-y-space-xs hover:bg-surface-container transition-colors border border-outline-variant/30 shadow-sm" role="button" tabindex="0">
               <div class="flex items-center justify-between">
                 <span class="font-code-sm text-xs text-primary font-semibold">02 / BIAYA</span>
                 <span class="material-symbols-outlined text-primary text-[20px]">functions</span>
@@ -205,7 +167,7 @@
               <p class="font-body-sm text-xs text-on-surface-variant">Pemetaan $f(\mathbf{x}): \Omega \to \mathbb{R}$ yang mencari minimum global $\min f(\mathbf{x})$ tanpa memerlukan turunan gradien.</p>
             </div>
 
-            <div class="bg-surface-container-low p-space-md rounded-lg space-y-space-xs hover:bg-surface-container transition-colors border border-outline-variant/30 shadow-sm">
+            <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-md rounded-lg space-y-space-xs hover:bg-surface-container transition-colors border border-outline-variant/30 shadow-sm" role="button" tabindex="0">
               <div class="flex items-center justify-between">
                 <span class="font-code-sm text-xs text-primary font-semibold">03 / AGEN</span>
                 <span class="material-symbols-outlined text-primary text-[20px]">groups</span>
@@ -214,7 +176,7 @@
               <p class="font-body-sm text-xs text-on-surface-variant">Kumpulan $N$ vektor kandidat solusi $\mathbf{X}_i$ yang bergerak secara stokastik sepanjang $T$ iterasi.</p>
             </div>
 
-            <div class="bg-surface-container-low p-space-md rounded-lg space-y-space-xs hover:bg-surface-container transition-colors border border-outline-variant/30 shadow-sm">
+            <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-md rounded-lg space-y-space-xs hover:bg-surface-container transition-colors border border-outline-variant/30 shadow-sm" role="button" tabindex="0">
               <div class="flex items-center justify-between">
                 <span class="font-code-sm text-xs text-primary font-semibold">04 / JELAJAH</span>
                 <span class="material-symbols-outlined text-primary text-[20px]">travel_explore</span>
@@ -223,7 +185,7 @@
               <p class="font-body-sm text-xs text-on-surface-variant">Pencarian global berdispersi luas untuk mencegah perangkap optimum lokal (local optima trapping).</p>
             </div>
 
-            <div class="bg-surface-container-low p-space-md rounded-lg space-y-space-xs hover:bg-surface-container transition-colors border border-outline-variant/30 shadow-sm">
+            <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-md rounded-lg space-y-space-xs hover:bg-surface-container transition-colors border border-outline-variant/30 shadow-sm" role="button" tabindex="0">
               <div class="flex items-center justify-between">
                 <span class="font-code-sm text-xs text-primary font-semibold">05 / FOKUS</span>
                 <span class="material-symbols-outlined text-primary text-[20px]">radar</span>
@@ -236,7 +198,7 @@
           <!-- Featured Algorithm Cards -->
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
             <!-- Kartu OOA -->
-            <div class="bg-surface-container-low p-space-lg rounded-xl space-y-space-md border border-outline-variant/40 shadow-sm relative overflow-hidden">
+            <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-lg rounded-xl space-y-space-md border border-outline-variant/40 shadow-sm relative overflow-hidden" role="button" tabindex="0">
               <div class="flex items-start justify-between">
                 <div>
                   <span class="inline-block px-space-xs py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-md text-xs uppercase tracking-wider mb-2 font-semibold">Avian Piscivore Metaheuristic</span>
@@ -257,20 +219,10 @@
                   <span class="font-semibold text-on-surface">Bebas Parameter (Stokastik $I \in \{1, 2\}$)</span>
                 </div>
               </div>
-              <div class="flex items-center justify-between pt-space-xs">
-                <a class="inline-flex items-center gap-space-xs text-primary font-semibold text-sm hover:underline" href="#ooa-osprey">
-                  <span>Pelajari Teori OOA</span>
-                  <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                </a>
-                <a class="inline-flex items-center gap-space-xs px-space-md py-2 rounded bg-primary text-on-primary font-label-md text-xs hover:bg-primary-container transition-colors shadow-sm" href="#interactive-lab" onclick="window.MetaOpt.setAlgorithm('ooa')">
-                  <span class="material-symbols-outlined text-[16px]">play_arrow</span>
-                  <span>Buka Simulasi OOA</span>
-                </a>
-              </div>
             </div>
 
             <!-- Kartu ChOA -->
-            <div class="bg-surface-container-low p-space-lg rounded-xl space-y-space-md border border-outline-variant/40 shadow-sm relative overflow-hidden">
+            <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-lg rounded-xl space-y-space-md border border-outline-variant/40 shadow-sm relative overflow-hidden" role="button" tabindex="0">
               <div class="flex items-start justify-between">
                 <div>
                   <span class="inline-block px-space-xs py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-md text-xs uppercase tracking-wider mb-2 font-semibold">Primate Social Pack Intelligence</span>
@@ -290,16 +242,6 @@
                   <span class="text-tertiary block">Modulasi Dinamis:</span>
                   <span class="font-semibold text-on-surface">Peluruhan $f$ &amp; Chaotic Map</span>
                 </div>
-              </div>
-              <div class="flex items-center justify-between pt-space-xs">
-                <a class="inline-flex items-center gap-space-xs text-secondary font-semibold text-sm hover:underline" href="#choa-chimp">
-                  <span>Pelajari Teori ChOA</span>
-                  <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                </a>
-                <a class="inline-flex items-center gap-space-xs px-space-md py-2 rounded bg-secondary text-on-secondary font-label-md text-xs hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-sm" href="#interactive-lab" onclick="window.MetaOpt.setAlgorithm('choa')">
-                  <span class="material-symbols-outlined text-[16px]">play_arrow</span>
-                  <span>Buka Simulasi ChOA</span>
-                </a>
               </div>
             </div>
           </div>
@@ -348,7 +290,7 @@
       </section>
 
       <!-- SECTION 2: OOA IN-DEPTH -->
-      <section class="w-full py-space-xl px-margin-mobile lg:px-margin bg-surface-container-low border-t border-b border-outline-variant/30" id="ooa-osprey">
+      <section class="presentation-slide w-full py-space-xl px-margin-mobile lg:px-margin bg-surface-container-low border-t border-b border-outline-variant/30" data-slide="04" id="ooa-osprey">
         <div class="max-w-7xl mx-auto space-y-space-xl">
           
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
@@ -368,7 +310,7 @@
 
           <!-- Widget Interaktif Model Berburu Burung Osprey -->
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
-            <div class="lg:col-span-7 bg-surface p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm">
+            <div class="lg:col-span-8 bg-surface p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-space-xs">
                   <span class="material-symbols-outlined text-primary">flight_takeoff</span>
@@ -379,8 +321,8 @@
               <p class="font-body-sm text-xs text-on-surface-variant leading-relaxed">
                 Amati dinamika dua lapisan: Osprey berpatroli di udara, mengidentifikasi kawanan ikan di bawah permukaan air laut, lalu menukik tajam (diving vector) sebelum membawa mangsa kembali ke pantai.
               </p>
-              <div class="relative w-full h-[300px] rounded-lg overflow-hidden bg-inverse-surface border border-outline-variant/20">
-                <canvas class="w-full h-full block cursor-crosshair" height="300" id="ooaHuntingCanvas" width="600"></canvas>
+              <div class="relative w-full h-[420px] rounded-lg overflow-hidden bg-inverse-surface border border-outline-variant/20">
+                <canvas class="w-full h-full block cursor-crosshair" height="420" id="ooaHuntingCanvas" width="840"></canvas>
                 <div class="absolute bottom-2 left-3 bg-inverse-surface/85 backdrop-blur px-space-sm py-1 rounded text-inverse-on-surface font-code-sm text-xs flex items-center gap-space-md">
                   <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary inline-block"></span> Osprey ($X_i$)</span>
                   <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-sky-400 inline-block"></span> Ikan Laut ($FP_i$)</span>
@@ -396,8 +338,8 @@
             </div>
 
             <!-- Formulasi Matematis OOA -->
-            <div class="lg:col-span-5 space-y-space-md">
-              <div class="bg-surface p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm">
+            <div class="lg:col-span-4 space-y-space-md">
+              <div aria-pressed="false" class="explanation-card bg-surface p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm" role="button" tabindex="0">
                 <div class="flex items-center justify-between">
                   <span class="font-label-md text-xs text-primary font-bold">FASE 1: EKSPLORASI GLOBAL</span>
                   <span class="px-1.5 py-0.5 rounded bg-surface-container text-tertiary font-code-sm text-xs">Hunting the Fish</span>
@@ -406,7 +348,7 @@
                   Setiap osprey mendeteksi ikan yang direpresentasikan oleh agen berkinerja lebih unggul:
                 </p>
                 <div class="bg-inverse-surface text-inverse-on-surface p-space-md rounded-lg font-code-sm text-xs leading-relaxed">
-                  <div class="text-tertiary font-mono">// Persamaan Perburuan Tahap 1</div>
+                  <div class="text-tertiary font-mono">Tahap 1</div>
                   <div class="text-white my-1 text-sm">
                     $$x_{i,j}^{P1} = x_{i,j} + r_1 \cdot \left(SF_{i,j} - I \cdot x_{i,j}\right)$$
                   </div>
@@ -416,7 +358,7 @@
                 </div>
               </div>
 
-              <div class="bg-surface p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm">
+              <div aria-pressed="false" class="explanation-card bg-surface p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm" role="button" tabindex="0">
                 <div class="flex items-center justify-between">
                   <span class="font-label-md text-xs text-primary font-bold">FASE 2: EKSPLOITASI LOKAL</span>
                   <span class="px-1.5 py-0.5 rounded bg-surface-container text-tertiary font-code-sm text-xs">Carrying Fish to Perch</span>
@@ -425,7 +367,7 @@
                   Setelah menangkap ikan, osprey terbang ke sarang pantai, melakukan pencarian intensif:
                 </p>
                 <div class="bg-inverse-surface text-inverse-on-surface p-space-md rounded-lg font-code-sm text-xs leading-relaxed">
-                  <div class="text-tertiary font-mono">// Persamaan Eksploitasi Tahap 2</div>
+                  <div class="text-tertiary font-mono">Tahap 2</div>
                   <div class="text-white my-1 text-sm">
                     $$x_{i,j}^{P2} = x_{i,j} + \frac{lb_j + r_2 \cdot (ub_j - lb_j)}{t}$$
                   </div>
@@ -510,7 +452,7 @@ Output: Solusi Terbaik Global X* dan Nilai Biaya f(X*)
       </section>
 
       <!-- SECTION 3: ChOA IN-DEPTH -->
-      <section class="w-full py-space-xl px-margin-mobile lg:px-margin bg-surface" id="choa-chimp">
+      <section class="presentation-slide w-full py-space-xl px-margin-mobile lg:px-margin bg-surface" data-slide="05" id="choa-chimp">
         <div class="max-w-7xl mx-auto space-y-space-xl">
           
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
@@ -530,7 +472,7 @@ Output: Solusi Terbaik Global X* dan Nilai Biaya f(X*)
 
           <!-- 4 Kasta Sosial Simpanse -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
-            <div class="bg-surface-container-low p-space-md rounded-lg space-y-space-xs border-t-4 border-primary border-outline-variant/30 shadow-sm">
+            <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-md rounded-lg space-y-space-xs border-t-4 border-primary border-outline-variant/30 shadow-sm" role="button" tabindex="0">
               <div class="flex items-center justify-between">
                 <span class="font-code-sm text-2xl text-primary font-bold">α</span>
                 <span class="font-label-md text-xs uppercase tracking-wider text-on-surface-variant font-semibold">Peringkat 1</span>
@@ -541,7 +483,7 @@ Output: Solusi Terbaik Global X* dan Nilai Biaya f(X*)
               </p>
             </div>
 
-            <div class="bg-surface-container-low p-space-md rounded-lg space-y-space-xs border-t-4 border-primary-container border-outline-variant/30 shadow-sm">
+            <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-md rounded-lg space-y-space-xs border-t-4 border-primary-container border-outline-variant/30 shadow-sm" role="button" tabindex="0">
               <div class="flex items-center justify-between">
                 <span class="font-code-sm text-2xl text-primary-container font-bold">β</span>
                 <span class="font-label-md text-xs uppercase tracking-wider text-on-surface-variant font-semibold">Peringkat 2</span>
@@ -552,7 +494,7 @@ Output: Solusi Terbaik Global X* dan Nilai Biaya f(X*)
               </p>
             </div>
 
-            <div class="bg-surface-container-low p-space-md rounded-lg space-y-space-xs border-t-4 border-secondary border-outline-variant/30 shadow-sm">
+            <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-md rounded-lg space-y-space-xs border-t-4 border-secondary border-outline-variant/30 shadow-sm" role="button" tabindex="0">
               <div class="flex items-center justify-between">
                 <span class="font-code-sm text-2xl text-secondary font-bold">γ</span>
                 <span class="font-label-md text-xs uppercase tracking-wider text-on-surface-variant font-semibold">Peringkat 3</span>
@@ -563,7 +505,7 @@ Output: Solusi Terbaik Global X* dan Nilai Biaya f(X*)
               </p>
             </div>
 
-            <div class="bg-surface-container-low p-space-md rounded-lg space-y-space-xs border-t-4 border-tertiary border-outline-variant/30 shadow-sm">
+            <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-md rounded-lg space-y-space-xs border-t-4 border-tertiary border-outline-variant/30 shadow-sm" role="button" tabindex="0">
               <div class="flex items-center justify-between">
                 <span class="font-code-sm text-2xl text-tertiary font-bold">δ</span>
                 <span class="font-label-md text-xs uppercase tracking-wider text-on-surface-variant font-semibold">Peringkat 4</span>
@@ -577,7 +519,7 @@ Output: Solusi Terbaik Global X* dan Nilai Biaya f(X*)
 
           <!-- Widget Interaktif Simpanse & Formulasi Vektor -->
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
-            <div class="lg:col-span-7 bg-surface-container-low p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm">
+            <div class="lg:col-span-8 bg-surface-container-low p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-space-xs">
                   <span class="material-symbols-outlined text-secondary">psychology</span>
@@ -588,8 +530,8 @@ Output: Solusi Terbaik Global X* dan Nilai Biaya f(X*)
               <p class="font-body-sm text-xs text-on-surface-variant leading-relaxed">
                 Demonstrasi interaktif bagaimana simpanse biasa menghitung perpindahan posisi relatif terhadap sentroid poligon yang dibentuk oleh $\alpha$, $\beta$, $\gamma$, dan $\delta$.
               </p>
-              <div class="relative w-full h-[300px] rounded-lg overflow-hidden bg-inverse-surface border border-outline-variant/20">
-                <canvas class="w-full h-full block cursor-crosshair" height="300" id="choaRoleCanvas" width="600"></canvas>
+              <div class="relative w-full h-[420px] rounded-lg overflow-hidden bg-inverse-surface border border-outline-variant/20">
+                <canvas class="w-full h-full block cursor-crosshair" height="420" id="choaRoleCanvas" width="840"></canvas>
                 <div class="absolute bottom-2 left-3 bg-inverse-surface/85 backdrop-blur px-space-sm py-1 rounded text-inverse-on-surface font-code-sm text-xs flex items-center gap-space-md flex-wrap">
                   <span class="text-primary font-semibold">● α (Attacker)</span>
                   <span class="text-primary-container font-semibold">● β (Barrier)</span>
@@ -607,8 +549,8 @@ Output: Solusi Terbaik Global X* dan Nilai Biaya f(X*)
             </div>
 
             <!-- Formulasi Matematis ChOA -->
-            <div class="lg:col-span-5 space-y-space-md">
-              <div class="bg-surface-container-low p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm">
+            <div class="lg:col-span-4 space-y-space-md">
+              <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm" role="button" tabindex="0">
                 <span class="font-label-md text-xs text-secondary font-bold">PENGURUNGAN MANGSA (ENCIRCLEMENT)</span>
                 <p class="font-body-sm text-xs text-on-surface-variant">
                   Jarak metrik dan perpindahan dihitung untuk tiap peran $j \in \{\alpha, \beta, \gamma, \delta\}$:
@@ -623,7 +565,7 @@ Output: Solusi Terbaik Global X* dan Nilai Biaya f(X*)
                 </div>
               </div>
 
-              <div class="bg-surface-container-low p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm">
+              <div aria-pressed="false" class="explanation-card bg-surface-container-low p-space-md rounded-xl border border-outline-variant/40 shadow-sm space-y-space-sm" role="button" tabindex="0">
                 <span class="font-label-md text-xs text-secondary font-bold">FUSI SENTROID 4-VEKTOR</span>
                 <p class="font-body-sm text-xs text-on-surface-variant">
                   Kombinasi rata-rata dari keempat vektor kepemimpinan:
@@ -715,7 +657,7 @@ Output: Posisi Attacker X_alpha dan Nilai Biaya f(X_alpha)
       </section>
 
       <!-- SECTION 4: THE INTERACTIVE LAB (MAIN ENGINE) -->
-      <section class="w-full py-space-xl px-margin-mobile lg:px-margin bg-surface-container-low border-t border-b border-outline-variant/30" id="interactive-lab">
+      <section class="presentation-slide w-full py-space-xl px-margin-mobile lg:px-margin bg-surface-container-low border-t border-b border-outline-variant/30" data-slide="06" id="interactive-lab">
         <div class="max-w-7xl mx-auto space-y-space-lg">
           
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
@@ -739,6 +681,9 @@ Output: Posisi Attacker X_alpha dan Nilai Biaya f(X_alpha)
                 ChOA (Chimp)
               </button>
             </div>
+            <a class="inline-flex items-center gap-1 self-start rounded-lg border border-outline-variant/30 px-space-sm py-1.5 font-label-md text-xs text-on-surface-variant transition-colors hover:border-primary hover:text-primary" href="#comparison">
+              Ke bagian komparasi <span aria-hidden="true">↓</span>
+            </a>
           </div>
 
           <!-- Controls Dashboard Panel -->
@@ -933,11 +878,8 @@ Output: Posisi Attacker X_alpha dan Nilai Biaya f(X_alpha)
 
           </div>
 
-        </div>
-      </section>
-
-      <!-- SECTION 5: ALGORITHM COMPARISON -->
-      <section class="w-full py-space-xl px-margin-mobile lg:px-margin bg-surface" id="comparison">
+          <!-- SECTION 5: ALGORITHM COMPARISON -->
+          <section class="comparison-panel pt-space-xl" id="comparison">
         <div class="max-w-7xl mx-auto space-y-space-lg">
           
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
@@ -1027,10 +969,12 @@ Output: Posisi Attacker X_alpha dan Nilai Biaya f(X_alpha)
           </div>
 
         </div>
+          </section>
+        </div>
       </section>
 
       <!-- SECTION 6: EXPERIMENT LAB & CSV EXPORT -->
-      <section class="w-full py-space-xl px-margin-mobile lg:px-margin bg-surface-container-low border-t border-b border-outline-variant/30" id="experiment">
+      <section class="presentation-slide w-full py-space-xl px-margin-mobile lg:px-margin bg-surface-container-low border-t border-b border-outline-variant/30" data-slide="07" id="experiment">
         <div class="max-w-7xl mx-auto space-y-space-lg">
           
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
@@ -1097,7 +1041,7 @@ Output: Posisi Attacker X_alpha dan Nilai Biaya f(X_alpha)
       </section>
 
       <!-- SECTION 7: SCIENTIFIC REFERENCES & CITATION -->
-      <section class="w-full py-space-xl px-margin-mobile lg:px-margin bg-surface" id="references">
+      <section class="presentation-slide w-full py-space-xl px-margin-mobile lg:px-margin bg-surface" data-slide="08" id="references">
         <div class="max-w-7xl mx-auto space-y-space-xl">
           
           <div class="space-y-space-xs">
@@ -1113,7 +1057,7 @@ Output: Posisi Attacker X_alpha dan Nilai Biaya f(X_alpha)
           <div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
             
             <!-- Sitasi OOA -->
-            <div class="bg-surface-container-low p-space-lg rounded-xl border border-outline-variant/40 space-y-space-sm shadow-sm">
+            <a class="reference-card bg-surface-container-low p-space-lg rounded-xl border border-outline-variant/40 space-y-space-sm shadow-sm" href="https://doi.org/10.1038/s41598-023-38822-7" rel="noopener noreferrer" target="_blank">
               <div class="flex items-center justify-between">
                 <span class="px-space-xs py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-md text-xs font-semibold">OOA PRIMARY PAPER</span>
                 <span class="font-code-sm text-xs text-tertiary">DOI: 10.1038/s41598-023-38822-7</span>
@@ -1136,10 +1080,10 @@ Output: Posisi Attacker X_alpha dan Nilai Biaya f(X_alpha)
 &nbsp;&nbsp;publisher={Nature Publishing Group}<br/>
 }
               </div>
-            </div>
+            </a>
 
             <!-- Sitasi ChOA -->
-            <div class="bg-surface-container-low p-space-lg rounded-xl border border-outline-variant/40 space-y-space-sm shadow-sm">
+            <a class="reference-card bg-surface-container-low p-space-lg rounded-xl border border-outline-variant/40 space-y-space-sm shadow-sm" href="https://doi.org/10.1016/j.eswa.2020.113338" rel="noopener noreferrer" target="_blank">
               <div class="flex items-center justify-between">
                 <span class="px-space-xs py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-md text-xs font-semibold">ChOA PRIMARY PAPER</span>
                 <span class="font-code-sm text-xs text-tertiary">DOI: 10.1016/j.eswa.2020.113338</span>
@@ -1162,69 +1106,33 @@ Output: Posisi Attacker X_alpha dan Nilai Biaya f(X_alpha)
 &nbsp;&nbsp;publisher={Elsevier}<br/>
 }
               </div>
-            </div>
+            </a>
 
           </div>
 
         </div>
       </section>
 
+      <!-- SLIDE 10: CLOSING -->
+      <section aria-label="Slide penutup" class="presentation-slide presentation-closing w-full px-margin-mobile lg:px-margin" id="closing-slide">
+        <div class="closing-content">
+          <div class="window-chrome" aria-hidden="true"><span></span><span></span><span></span></div>
+          <h2 class="font-headline-lg text-6xl md:text-8xl font-semibold text-white">Terima kasih</h2>
+        </div>
+      </section>
+
     </div>
   </main>
 
-  <!-- Tombol Melayang Back to Top -->
-  <button class="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-primary text-on-primary shadow-lg opacity-0 pointer-events-none transition-all duration-300 hover:bg-primary-container" id="btnBackToTop" aria-label="Kembali ke atas">
-    <span class="material-symbols-outlined text-[20px]">arrow_upward</span>
-  </button>
-
-  <!-- Footer Akademik -->
-  <footer class="w-full bg-surface-container-low border-t border-outline-variant/40 py-space-xl mt-space-xl">
-    <div class="max-w-7xl mx-auto px-margin-mobile lg:px-margin">
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-space-lg mb-space-lg">
-        
-        <div class="md:col-span-5 space-y-space-sm">
-          <div class="flex items-center gap-space-xs">
-            <span class="font-code-sm text-label-lg tracking-widest text-primary font-bold">META::OPT</span>
-            <span class="font-label-md text-xs text-tertiary">· Seri Monograf Laboratorium Komputasi</span>
-          </div>
-          <p class="font-body-sm text-xs text-on-surface-variant max-w-md leading-relaxed">
-            Lingkungan benchmark komputasi interaktif yang didedikasikan untuk eksplorasi dan perbandingan metaheuristik domain kontinu: Osprey Optimization Algorithm (OOA) dan Chimp Optimization Algorithm (ChOA).
-          </p>
-        </div>
-
-        <div class="md:col-span-4 space-y-space-xs">
-          <div class="font-label-md text-xs uppercase tracking-wider text-on-surface font-bold">Sitasi Modul Web</div>
-          <div class="p-space-sm rounded-lg bg-inverse-surface text-inverse-on-surface font-code-sm text-xs select-all overflow-x-auto leading-relaxed">
-@misc{metaopt_lab2026,<br/>
-&nbsp;&nbsp;title={Interactive Metaheuristic Algorithm Lab: OOA &amp; ChOA},<br/>
-&nbsp;&nbsp;author={Computational Intelligence Laboratory},<br/>
-&nbsp;&nbsp;year={2026},<br/>
-&nbsp;&nbsp;url={https://github.com/dimasptrr/metaheuristik_kelompok-8_kelas-B}<br/>
-}
-          </div>
-        </div>
-
-        <div class="md:col-span-3 space-y-space-xs">
-          <div class="font-label-md text-xs uppercase tracking-wider text-on-surface font-bold">Protokol &amp; Standar</div>
-          <ul class="space-y-1 font-body-sm text-xs text-on-surface-variant">
-            <li>• Fungsi Uji Standar CEC Benchmarks</li>
-            <li>• Standar IEEE Computational Intelligence</li>
-            <li>• Pseudo-RNG Deterministik Seeded</li>
-            <li>• Kompatibel Deployment GitHub Pages</li>
-          </ul>
-        </div>
-
-      </div>
-
-      <div class="pt-space-md border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-space-sm text-on-surface-variant font-code-sm text-xs">
-        <div>© 2026 Metaheuristic Optimization Consortium. Lisensi Akademik Terbuka.</div>
-        <div class="flex items-center gap-space-md">
-          <span>Kernel: v2.4.1-vanilla</span>
-          <span>Presisi: IEEE-754 FP64</span>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <nav aria-label="Navigasi slide" class="deck-controls" id="deckControls">
+    <button aria-label="Slide sebelumnya" class="deck-arrow" id="previousSlide" type="button">
+      <span aria-hidden="true">←</span><span class="deck-arrow-label">Sebelumnya</span>
+    </button>
+    <div aria-live="polite" class="deck-counter font-code-sm" id="deckCounter">01 / 10</div>
+    <button aria-label="Slide selanjutnya" class="deck-arrow" id="nextSlide" type="button">
+      <span class="deck-arrow-label">Selanjutnya</span><span aria-hidden="true">→</span>
+    </button>
+  </nav>
 
   <!-- Modular Script Execution Pipeline -->
   <script src="js/benchmarks/functions.js"></script>
@@ -1239,4 +1147,3 @@ Output: Posisi Attacker X_alpha dan Nilai Biaya f(X_alpha)
 
 </body>
 </html>
-
