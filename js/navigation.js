@@ -1,127 +1,137 @@
 /**
  * NAVIGATION, SCROLL-SPY & INTERACTION HANDLERS
- * Mengelola navigasi mulus, scroll progress, responsive mobile drawer,
- * scroll-spy indikator aktif, dan flowchart step inspector.
+ * Mengelola navigasi slide, transisi fade, dan flowchart step inspector.
  */
 (function() {
   window.MetaOpt = window.MetaOpt || {};
 
   function initNavigation() {
-    const navLinks = document.querySelectorAll('a[data-path]');
-    const sections = ['overview', 'ooa-osprey', 'choa-chimp', 'interactive-lab', 'comparison', 'experiment', 'references'];
-    const scrollProgressBar = document.getElementById('scrollProgressBar');
-    const btnBackToTop = document.getElementById('btnBackToTop');
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenuCloseBtn = document.getElementById('mobileMenuCloseBtn');
-    const mobileDrawer = document.getElementById('mobileDrawer');
-    const mobileBackdrop = document.getElementById('mobileBackdrop');
+    const slides = Array.from(document.querySelectorAll('#presentationDeck .presentation-slide'));
+    const progress = document.getElementById('deckProgress');
+    const counter = document.getElementById('deckCounter');
+    const previousButton = document.getElementById('previousSlide');
+    const nextButton = document.getElementById('nextSlide');
+    const hashTarget = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+    const linkedIndex = slides.findIndex(slide => slide === hashTarget || slide.contains(hashTarget));
+    let activeIndex = linkedIndex >= 0 ? linkedIndex : 0;
 
-    // 1. Smooth Scroll saat tautan navigasi diklik
-    navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        const targetId = link.getAttribute('data-path');
-        const targetEl = document.getElementById(targetId);
-        if (targetEl) {
-          e.preventDefault();
-          const headerOffset = 80;
-          const elPos = targetEl.getBoundingClientRect().top;
-          const offsetPos = elPos + window.pageYOffset - headerOffset;
+    function showSlide(index) {
+      if (index < 0 || index >= slides.length || index === activeIndex) return;
 
-          window.scrollTo({
-            top: offsetPos,
-            behavior: 'smooth'
-          });
-
-          // Tutup mobile drawer jika terbuka
-          closeMobileDrawer();
-        }
+      if (slides[activeIndex].contains(document.activeElement)) document.activeElement.blur();
+      slides[activeIndex].classList.remove('is-active');
+      activeIndex = index;
+      slides[activeIndex].scrollTop = 0;
+      slides[activeIndex].classList.remove('is-active');
+      void slides[activeIndex].offsetWidth;
+      slides[activeIndex].classList.add('is-active');
+      slides.forEach((slide, slideIndex) => {
+        slide.setAttribute('aria-hidden', slideIndex === activeIndex ? 'false' : 'true');
       });
-    });
 
-    // 2. Mobile Drawer Toggle
-    function openMobileDrawer() {
-      if (mobileDrawer && mobileBackdrop) {
-        mobileDrawer.classList.remove('translate-x-full');
-        mobileBackdrop.classList.remove('hidden');
-        document.body.classList.add('overflow-hidden');
-      }
+      if (counter) counter.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+      if (progress) progress.style.width = `${((activeIndex + 1) / slides.length) * 100}%`;
+      if (previousButton) previousButton.disabled = activeIndex === 0;
+      if (nextButton) nextButton.disabled = activeIndex === slides.length - 1;
+      history.replaceState(null, '', `#${slides[activeIndex].id}`);
     }
 
-    function closeMobileDrawer() {
-      if (mobileDrawer && mobileBackdrop) {
-        mobileDrawer.classList.add('translate-x-full');
-        mobileBackdrop.classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
-      }
-    }
-
-    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileDrawer);
-    if (mobileMenuCloseBtn) mobileMenuCloseBtn.addEventListener('click', closeMobileDrawer);
-    if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileDrawer);
-
-    // Escape key untuk menutup mobile drawer
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeMobileDrawer();
+    slides.forEach((slide, index) => {
+      slide.classList.toggle('is-active', index === activeIndex);
+      slide.setAttribute('aria-hidden', index === activeIndex ? 'false' : 'true');
     });
 
-    // 3. Scroll Progress Indicator & Back to Top & Scroll-Spy
-    window.addEventListener('scroll', () => {
-      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    if (counter) counter.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    if (progress) progress.style.width = `${(1 / slides.length) * 100}%`;
+    if (previousButton) previousButton.disabled = true;
+    if (nextButton) nextButton.disabled = slides.length < 2;
 
-      if (scrollProgressBar) {
-        scrollProgressBar.style.width = scrolled + '%';
-      }
+    preparePseudocode('ooaPseudocodeBlock');
+    preparePseudocode('choaPseudocodeBlock');
+    window.selectOoaStep(1);
+    window.selectChoaStep(1);
+    setupExplanationHighlights();
 
-      // Tombol Back to Top visibility
-      if (btnBackToTop) {
-        if (winScroll > 400) {
-          btnBackToTop.classList.remove('opacity-0', 'pointer-events-none');
-          btnBackToTop.classList.add('opacity-100');
+    if (previousButton) previousButton.addEventListener('click', () => showSlide(activeIndex - 1));
+    if (nextButton) nextButton.addEventListener('click', () => showSlide(activeIndex + 1));
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const target = document.getElementById(link.getAttribute('href').slice(1));
+        const targetIndex = slides.indexOf(target?.closest('.presentation-slide'));
+        if (targetIndex === -1) return;
+        e.preventDefault();
+        if (targetIndex === activeIndex) {
+          target.scrollIntoView({ block: 'start', behavior: 'smooth' });
         } else {
-          btnBackToTop.classList.add('opacity-0', 'pointer-events-none');
-          btnBackToTop.classList.remove('opacity-100');
-        }
-      }
-
-      // Scroll-Spy Deteksi Bagian Aktif
-      let currentSection = 'overview';
-      const scrollPos = winScroll + 120;
-
-      for (let i = 0; i < sections.length; i++) {
-        const secId = sections[i];
-        const el = document.getElementById(secId);
-        if (el) {
-          const top = el.offsetTop;
-          const h = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + h) {
-            currentSection = secId;
-            break;
+          showSlide(targetIndex);
+          if (target !== slides[targetIndex]) {
+            window.setTimeout(() => target.scrollIntoView({ block: 'start', behavior: 'smooth' }), 450);
           }
         }
+      });
+    });
+
+    document.querySelectorAll('.reference-card').forEach(card => {
+      card.addEventListener('click', () => card.classList.add('is-selected'));
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      const target = e.target;
+      if (target instanceof HTMLElement && (target.isContentEditable || /INPUT|SELECT|TEXTAREA/.test(target.tagName))) return;
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+        e.preventDefault();
+        showSlide(activeIndex + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        showSlide(activeIndex - 1);
       }
+    });
+  }
 
-      // Perbarui style tombol navigasi aktif
-      navLinks.forEach(link => {
-        const p = link.getAttribute('data-path');
-        if (p === currentSection) {
-          link.classList.add('bg-primary', 'text-on-primary', 'font-semibold', 'shadow-sm');
-          link.classList.remove('text-on-surface-variant', 'hover:bg-surface-container-high', 'hover:text-on-surface');
-          link.setAttribute('aria-current', 'page');
-        } else {
-          link.classList.remove('bg-primary', 'text-on-primary', 'font-semibold', 'shadow-sm');
-          link.classList.add('text-on-surface-variant', 'hover:bg-surface-container-high', 'hover:text-on-surface');
-          link.removeAttribute('aria-current');
-        }
+  function setupExplanationHighlights() {
+    document.querySelectorAll('.explanation-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const selected = card.classList.toggle('is-selected');
+        card.setAttribute('aria-pressed', String(selected));
       });
-    }, { passive: true });
 
-    if (btnBackToTop) {
-      btnBackToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      card.addEventListener('keydown', event => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        card.click();
       });
-    }
+    });
+  }
+
+  function preparePseudocode(blockId) {
+    const block = document.getElementById(blockId);
+    if (!block || block.dataset.prepared === 'true') return;
+
+    const lines = block.textContent.split('\n');
+    block.replaceChildren(...lines.map(line => {
+      const lineElement = document.createElement('span');
+      const match = line.match(/^\s*(\d+):/);
+      lineElement.className = 'pseudocode-line';
+      if (match) lineElement.dataset.codeLine = match[1];
+      lineElement.textContent = line;
+      return lineElement;
+    }));
+    block.dataset.prepared = 'true';
+  }
+
+  function highlightPseudocode(blockId, lineNumbers) {
+    const block = document.getElementById(blockId);
+    if (!block) return;
+
+    const selectedLines = new Set(lineNumbers.map(String));
+    block.querySelectorAll('.pseudocode-line').forEach(line => {
+      line.classList.toggle('is-highlighted', selectedLines.has(line.dataset.codeLine));
+    });
+
+    const firstLine = block.querySelector('.pseudocode-line.is-highlighted');
+    if (firstLine) firstLine.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
 
   // --- Interactive Flowchart Step Inspector untuk OOA ---
@@ -144,6 +154,15 @@
         }
       }
     }
+    const codeLines = {
+      1: [5, 6, 7],
+      2: [8, 9, 10],
+      3: [11],
+      4: [13, 14, 15],
+      5: [16, 17, 18, 19, 20]
+    };
+    highlightPseudocode('ooaPseudocodeBlock', codeLines[stepNum] || []);
+
     const box = document.getElementById('ooaStepDetailBox');
     if (box) {
       box.innerHTML = descriptions[stepNum];
@@ -178,6 +197,15 @@
         }
       }
     }
+    const codeLines = {
+      1: [1, 2],
+      2: [4, 5, 6, 7, 8, 9, 10, 11],
+      3: [12],
+      4: [13, 14, 15, 16],
+      5: [17, 18, 19, 20, 21, 22]
+    };
+    highlightPseudocode('choaPseudocodeBlock', codeLines[stepNum] || []);
+
     const box = document.getElementById('choaStepDetailBox');
     if (box) {
       box.innerHTML = descriptions[stepNum];
@@ -214,4 +242,3 @@
 
   document.addEventListener('DOMContentLoaded', initNavigation);
 })();
-
