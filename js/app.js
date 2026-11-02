@@ -87,7 +87,7 @@
     // 5. Setup Tombol Perbandingan Sinkron
     const btnRunCmp = document.getElementById('btnRunComparison');
     if (btnRunCmp) {
-      btnRunCmp.addEventListener('click', runSynchronousBenchmark);
+      btnRunCmp.addEventListener('click', () => runSynchronousBenchmark(true));
     }
 
     // 6. Setup Tombol Eksperimen Monte Carlo
@@ -310,7 +310,7 @@
   }
 
   // --- Perbandingan Sinkron OOA vs ChOA (Section 5) ---
-  function runSynchronousBenchmark() {
+  function runSynchronousBenchmark(animatePlot = false) {
     const benchKey = simEngine.benchmarkKey;
     const bench = window.MetaOpt.BENCHMARKS[benchKey];
     if (!bench) return;
@@ -381,7 +381,11 @@
 
     // 4. Render Dual Canvas Plot
     if (dualChart) {
-      dualChart.render(ooaState.convergenceHistory, choaState.convergenceHistory, maxIter);
+      if (animatePlot) {
+        dualChart.animate(ooaState.convergenceHistory, choaState.convergenceHistory, maxIter);
+      } else {
+        dualChart.render(ooaState.convergenceHistory, choaState.convergenceHistory, maxIter);
+      }
     }
   }
 
@@ -471,4 +475,3 @@
 
   document.addEventListener('DOMContentLoaded', initApp);
 })();
-
